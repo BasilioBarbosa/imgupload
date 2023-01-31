@@ -7,9 +7,7 @@ import moment from "moment"
 import Alert from 'react-bootstrap/Alert';
 
 const Home = () => {
-
     const [data, setData] = useState([]);
-
     const [show, setShow] = useState(false);
 
     const getUserData = async () => {
@@ -27,7 +25,6 @@ const Home = () => {
             console.log("error")
         }
     }
-
 
     const dltUser = async (id) => {
         console.log(id)

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom"
 const Register = () => {
     const [fname, setFName] = useState("");
     const [file, setFile] = useState("");
-
     const history = useNavigate();
 
     const setdata = (e) => {
