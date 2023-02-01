@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
-//REGSITO DE UM NOVO UTILIZADOR
+//LOGIN DE UM NOVO UTILIZADOR
 
-const Register = () => {
+const Login = () => {
     const [fname, setFName] = useState("");
     const [file, setFile] = useState("");
     const history = useNavigate();
@@ -32,7 +32,7 @@ const Register = () => {
             }
         }
 
-        const res = await axios.post("/register", formData, config);
+        const res = await axios.post("/login", formData, config);
 
         if (res.data.status == 201) {
             history("/")
@@ -44,7 +44,7 @@ const Register = () => {
     return (
         <>
             <div className='container mt-3'>
-                <h1>Upload Your Img Here</h1>
+                <h1>Login User</h1>
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>UserName</Form.Label>
@@ -56,7 +56,7 @@ const Register = () => {
                         <Form.Control type="file" name='photo' onChange={setimgfile} />
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={addUserData}>
-                        Submit
+                        Entrar
                     </Button>
                 </Form>
             </div>
@@ -64,4 +64,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Login

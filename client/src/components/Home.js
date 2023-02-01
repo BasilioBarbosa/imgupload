@@ -42,6 +42,7 @@ const Home = () => {
         }
     }
 
+    //atualiza os dados
     useEffect(() => {
         getUserData()
     }, [])
@@ -56,6 +57,9 @@ const Home = () => {
             <div className="container mt-2">
                 <h1 className='text-center mt-2'>Image Upload Projects With Mysql database</h1>
 
+                <div className='text-end'>
+                    <Button variant="primary"><NavLink to="/login" className="text-decoration-none text-light">Login</NavLink></Button>
+                </div>
                 <div className='text-end'>
                     <Button variant="primary"><NavLink to="/register" className="text-decoration-none text-light"> Add User</NavLink></Button>
                 </div>
@@ -79,7 +83,6 @@ const Home = () => {
                             )
                         }) : ""
                     }
-
                 </div>
             </div>
         </>

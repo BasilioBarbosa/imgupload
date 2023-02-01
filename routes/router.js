@@ -1,20 +1,24 @@
 const express = require("express");
 const router = new express.Router();
 const conn = require("../db/conn");
+//fichieros
 const multer = require("multer");
+//datas
 const moment = require("moment")
 
 // img storage confing
 var imgconfig = multer.diskStorage({
     destination: (req, file, callback) => {
+        //funcao callback para direcionar o caminho da pasta das imagens
         callback(null, "./uploads");
     },
     filename: (req, file, callback) => {
+        //imagem fica com a data atual
         callback(null, `image-${Date.now()}.${file.originalname}`)
     }
 });
 
-// img filter
+// img filter --> verifica se é imagem
 const isImage = (req, file, callback) => {
     if (file.mimetype.startsWith("image")) {
         callback(null, true)
@@ -23,24 +27,28 @@ const isImage = (req, file, callback) => {
     }
 }
 
+//faz o upload da imagem
 var upload = multer({
     storage: imgconfig,
     fileFilter: isImage
 })
 
-// register userdata
+// register userdata --> upload de uma imagem unica se quisermos podemos fazer upload.array e vamos buscar um array de imagens
 router.post("/register", upload.single("photo"), (req, res) => {
+    //insercao de dados no registo ao clicar em "add user"
     const { fname } = req.body;
     const { filename } = req.file;
 
+    //verificacao para preencher todos os campos
     if (!fname || !filename) {
         res.status(422).json({ status: 422, message: "fill all the details" })
     }
 
     try {
-
+        //formato da data
         let date = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
 
+        //insere na BD
         conn.query("INSERT INTO usersdata SET ?", { username: fname, userimg: filename, date: date }, (err, result) => {
             if (err) {
                 console.log("error")
@@ -53,6 +61,38 @@ router.post("/register", upload.single("photo"), (req, res) => {
         res.status(422).json({ status: 422, error })
     }
 });
+
+
+
+
+router.post("/login", upload.single("photo"), (req, res) => {
+    //insercao de dados no registo ao clicar em "add user"
+    const { fname } = req.body;
+    const { filename } = req.file;
+
+    //verificacao para preencher todos os campos
+    if (!fname || !filename) {
+        res.status(422).json({ status: 422, message: "fill all the details" })
+    }
+
+    try {
+        //formato da data
+        let date = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
+
+        //insere na BD
+        conn.query("INSERT INTO usersdata SET ?", { username: fname, userimg: filename, date: date }, (err, result) => {
+            if (err) {
+                console.log("error")
+            } else {
+                console.log("data added")
+                res.status(201).json({ status: 201, data: req.body })
+            }
+        })
+    } catch (error) {
+        res.status(422).json({ status: 422, error })
+    }
+});
+
 
 // get user data
 router.get("/getdata", (req, res) => {
