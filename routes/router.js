@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const conn = require("../db/conn");
-//fichieros
+//ficheiros
 const multer = require("multer");
 //datas
 const moment = require("moment")
@@ -62,9 +62,6 @@ router.post("/register", upload.single("photo"), (req, res) => {
     }
 });
 
-
-
-
 router.post("/login", upload.single("photo"), (req, res) => {
     //insercao de dados no registo ao clicar em "add user"
     const { fname } = req.body;
@@ -92,7 +89,6 @@ router.post("/login", upload.single("photo"), (req, res) => {
         res.status(422).json({ status: 422, error })
     }
 });
-
 
 // get user data
 router.get("/getdata", (req, res) => {
