@@ -4,7 +4,8 @@ const conn = require("../db/conn");
 //ficheiros
 const multer = require("multer");
 //datas
-const moment = require("moment")
+const moment = require("moment");
+const { max } = require("moment");
 
 // img storage confing
 var imgconfig = multer.diskStorage({
@@ -18,12 +19,13 @@ var imgconfig = multer.diskStorage({
     }
 });
 
-// img filter --> verifica se é imagem
+// img filter --> verifica se é imagem 
+//NAO ESTA A PASSAR ZIP E PDF PARA A BD QUANDO INTRODUZIMOS ATRAVES DE UMA PASTA NO AMBIENTE DE TRABALHO 'pdfs'
 const isImage = (req, file, callback) => {
-    if (file.mimetype.startsWith("image")) {
+    if (file.mimetype.startsWith("image") && file.mimetype === 'application/pdf' && file.mimetype === 'application/zip') {
         callback(null, true)
     } else {
-        callback(null, Error("only image is allowd"))
+        callback(null, Error("only image, zip and pdf are allowd"))
     }
 }
 
@@ -31,7 +33,7 @@ const isImage = (req, file, callback) => {
 var upload = multer({
     storage: imgconfig,
     fileFilter: isImage
-})
+})  //.array()
 
 // register userdata --> upload de uma imagem unica se quisermos podemos fazer upload.array e vamos buscar um array de imagens
 router.post("/register", upload.single("photo"), (req, res) => {
