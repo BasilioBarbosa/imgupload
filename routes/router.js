@@ -92,6 +92,34 @@ router.post("/login", upload.single("photo"), (req, res) => {
     }
 });
 
+/*router.post("/calendar", (req, res) => {
+    //insercao de dados no registo ao clicar em "add user"
+    const { fname } = req.body;
+    const { filename } = req.file;
+
+    //verificacao para preencher todos os campos
+    if (!fname || !filename) {
+        res.status(422).json({ status: 422, message: "fill all the details" })
+    }
+
+    try {
+        //formato da data
+        let date = moment(new Date()).format("YYYY-MM-DD hh:mm:ss");
+
+        //insere na BD
+        conn.query("INSERT INTO usersdata SET ?", { username: fname, userimg: filename, date: date }, (err, result) => {
+            if (err) {
+                console.log("error")
+            } else {
+                console.log("data added")
+                res.status(201).json({ status: 201, data: req.body })
+            }
+        })
+    } catch (error) {
+        res.status(422).json({ status: 422, error })
+    }
+});*/
+
 // get user data
 router.get("/getdata", (req, res) => {
     try {
